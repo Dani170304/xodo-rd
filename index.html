@@ -129,54 +129,22 @@
             text-align: center;
         }
 
-        .gif-container {
+        .media-container {
             margin-top: 20px;
             width: 100%;
             max-width: 400px;
         }
 
-        .gif-container img {
+        .media-container img {
             width: 100%;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: block;
-            animation: slowGif 6s steps(1) forwards;
-        }
-
-        .video-container {
-            margin-top: 20px;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .video-container video {
-            width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .next-message {
-            display: none;
-            font-size: 1.5rem;
-            color: #ff4646;
-            margin-top: 20px;
-            animation: fadeIn 1s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
-        }
-
-        @keyframes slowGif {
-            0% { opacity: 1; }
-            100% { opacity: 1; }
         }
 
         @media (max-width: 480px) {
@@ -197,17 +165,12 @@
                 height: 167px;
             }
         }
-        
-        #secondVideo {
+
+        #video2 {
             display: none;
-        }
-        
-        #firstGif {
-            display: block;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="content-container">
@@ -226,17 +189,8 @@
                         <div class="letter">
                             <h3>Bebe...</h3>
                             <p>TE QUIERO CULEAR.</p>
-                            <div class="gif-container">
-                                <img id="firstGif" src="video1.gif" alt="Gif de amor">
-                            </div>
-                            <div class="video-container">
-                                <video id="secondVideo" width="100%" muted>
-                                    <source src="video2.gif" type="video/mp4">
-                                    Tu navegador no soporta el elemento de video.
-                                </video>
-                            </div>
-                            <div id="nextMessage" class="next-message">
-                                <p>Te lavas la pija y...</p>
+                            <div class="media-container">
+                                <img id="video2" src="video2.gif" alt="Gif" onload="this.style.display='block'">
                             </div>
                         </div>
                     </div>
@@ -259,9 +213,32 @@
         let isDeleting = false;
         let typingSpeed = 100;
         let phrasesCompleted = 0;
-        const pauseAfterPhrase = 3000; // Tiempo que se queda cada frase (3 segundos)
-        const gifDuration = 6000; // Duración del primer gif (6 segundos)
-        const messageDuration = 4000; // Duración del mensaje "Te lavas la pija y..."
+
+        function startMediaSequence() {
+            const video2 = document.getElementById('video2');
+            video2.style.display = 'block';
+            
+            // Después de 6 segundos (duración aproximada del GIF), reiniciar todo
+            setTimeout(() => {
+                resetAnimation();
+            }, 6000); // Ajusta este tiempo según la duración de tu GIF
+        }
+
+        function showEnvelope() {
+            const phrasesSection = document.querySelector('.phrases-section');
+            const envelopeContainer = document.getElementById('envelopeContainer');
+
+            phrasesSection.classList.add('hide');
+            envelopeContainer.style.display = 'block';
+
+            setTimeout(() => {
+                const envelope = document.getElementById('envelope');
+                envelope.classList.add('open');
+                
+                // Iniciar secuencia de medios cuando se abre el sobre
+                setTimeout(startMediaSequence, 1000);
+            }, 1000);
+        }
 
         function resetAnimation() {
             currentPhraseIndex = 0;
@@ -273,17 +250,12 @@
             const phrasesSection = document.querySelector('.phrases-section');
             const envelopeContainer = document.getElementById('envelopeContainer');
             const envelope = document.getElementById('envelope');
-            const firstGif = document.getElementById('firstGif');
-            const secondVideo = document.getElementById('secondVideo');
-            const nextMessage = document.getElementById('nextMessage');
+            const video2 = document.getElementById('video2');
             
+            video2.style.display = 'none';
             envelopeContainer.style.display = 'none';
             phrasesSection.classList.remove('hide');
             envelope.classList.remove('open');
-            firstGif.style.display = 'block';
-            secondVideo.style.display = 'none';
-            secondVideo.currentTime = 0;
-            nextMessage.style.display = 'none';
             
             typeEffect();
         }
@@ -293,11 +265,10 @@
             const textElement = document.getElementById('text');
 
             if (!isDeleting && currentCharIndex === currentPhrase.length) {
-                // Cuando termina de escribir la frase, espera antes de borrarla
                 setTimeout(() => {
                     isDeleting = true;
                     typeEffect();
-                }, pauseAfterPhrase);
+                }, 3000);
                 return;
             }
 
@@ -324,45 +295,6 @@
 
             setTimeout(typeEffect, typingSpeed);
         }
-
-        function showEnvelope() {
-            const phrasesSection = document.querySelector('.phrases-section');
-            const envelopeContainer = document.getElementById('envelopeContainer');
-
-            phrasesSection.classList.add('hide');
-            envelopeContainer.style.display = 'block';
-
-            setTimeout(() => {
-                const envelope = document.getElementById('envelope');
-                envelope.classList.add('open');
-            }, 1000);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const firstGif = document.getElementById('firstGif');
-            const secondVideo = document.getElementById('secondVideo');
-            const nextMessage = document.getElementById('nextMessage');
-
-            // Mostrar el primer gif por la duración especificada
-            setTimeout(function() {
-                firstGif.style.display = 'none';
-                nextMessage.style.display = 'block';
-                
-                setTimeout(() => {
-                    nextMessage.style.display = 'none';
-                    setTimeout(() => {
-                        secondVideo.style.display = 'block';
-                        secondVideo.play();
-                    }, 500);
-                }, messageDuration);
-            }, gifDuration);
-            
-            secondVideo.addEventListener('ended', function() {
-                setTimeout(() => {
-                    resetAnimation();
-                }, 3000);
-            });
-        });
 
         window.onload = typeEffect;
     </script>
