@@ -129,6 +129,19 @@
             text-align: center;
         }
 
+        .gif-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .gif-container img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
         .video-container {
             margin-top: 20px;
             width: 100%;
@@ -194,6 +207,9 @@
         #secondVideo{
             display: none;
         }
+        #firstGif {
+            display: block;
+        }
     </style>
 </head>
 
@@ -215,11 +231,10 @@
                         <div class="letter">
                             <h3>Bebe...</h3>
                             <p>TE QUIERO CULEAR.</p>
+                            <div class="gif-container">
+                                <img id="firstGif" src="video1.gif" alt="Gif de amor">
+                            </div>
                             <div class="video-container">
-                                <video id="firstVideo" width="100%" autoplay muted>
-                                    <source src="video1.mp4" type="video/mp4">
-                                    Tu navegador no soporta el elemento de video.
-                                </video>
                                 <video id="secondVideo" width="100%" muted>
                                     <source src="video2.mp4" type="video/mp4">
                                     Tu navegador no soporta el elemento de video.
@@ -251,7 +266,7 @@
         let phrasesCompleted = 0;
         
         // Configuración de tiempo para el mensaje "Te lavas la pija y..."
-        const messageDuration = 4000; // Cambiado de 3000 a 6000 milisegundos (6 segundos)
+        const messageDuration = 4000; // 4 segundos
 
         function resetAnimation() {
             // Reset variables
@@ -265,7 +280,7 @@
             const phrasesSection = document.querySelector('.phrases-section');
             const envelopeContainer = document.getElementById('envelopeContainer');
             const envelope = document.getElementById('envelope');
-            const firstVideo = document.getElementById('firstVideo');
+            const firstGif = document.getElementById('firstGif');
             const secondVideo = document.getElementById('secondVideo');
             const nextMessage = document.getElementById('nextMessage');
             
@@ -276,10 +291,9 @@
             // Reset envelope
             envelope.classList.remove('open');
             
-            // Reset videos
-            firstVideo.style.display = 'block';
+            // Reset gif and video
+            firstGif.style.display = 'block';
             secondVideo.style.display = 'none';
-            firstVideo.currentTime = 0;
             secondVideo.currentTime = 0;
             
             // Hide next message
@@ -335,15 +349,15 @@
             }, 1000);
         }
 
-        // Configure video sequence and restart
+        // Configure gif, message and video sequence
         document.addEventListener('DOMContentLoaded', function() {
-            const firstVideo = document.getElementById('firstVideo');
+            const firstGif = document.getElementById('firstGif');
             const secondVideo = document.getElementById('secondVideo');
             const nextMessage = document.getElementById('nextMessage');
 
-            // When first video ends, show the message
-            firstVideo.addEventListener('ended', function() {
-                firstVideo.style.display = 'none';
+            // Simulate gif "ended" event after 3 seconds
+            setTimeout(function() {
+                firstGif.style.display = 'none';
                 nextMessage.style.display = 'block';
                 
                 // After the defined duration, hide message and show second video
@@ -355,7 +369,7 @@
                         secondVideo.play(); // Play second video
                     }, 500);
                 }, messageDuration);
-            });
+            }, 3000); // Simulating 3 seconds of GIF playing
             
             // When second video ends, restart everything
             secondVideo.addEventListener('ended', function() {
