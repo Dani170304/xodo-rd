@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUCO MAMALON</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .content-container {
+            position: relative;
+            min-height: 300px;
+        }
+
+        .phrases-section {
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        .phrases-section.hide {
+            opacity: 0;
+            display: none;
+        }
+
+        h1 {
+            color: #ff4646;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .typewriter {
+            min-height: 100px;
+            margin: 2rem 0;
+            color: #333;
+            font-size: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .heart {
+            color: #ff4646;
+            font-size: 3rem;
+            margin: 1rem 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        .envelope-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 200px;
+            display: none;
+        }
+
+        .envelope {
+            width: 100%;
+            height: 100%;
+            background-color: #f5f5f5;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transition: transform 1s ease;
+        }
+
+        .envelope.open {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #ff4646;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            backface-visibility: hidden;
+        }
+
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+            transform: rotateX(180deg);
+            backface-visibility: hidden;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .letter {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .video-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .next-message {
+            display: none;
+            font-size: 1.5rem;
+            color: #ff4646;
+            margin-top: 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .typewriter {
+                font-size: 1.2rem;
+            }
+
+            .envelope-container {
+                width: 250px;
+                height: 167px;
+            }
+        }
+        #secondVideo{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content-container">
+            <div class="phrases-section">
+                <h1>Feliz San Valentín DELIRUCKS</h1>
+                <div class="heart">❤️</div>
+                <div class="typewriter" id="text"></div>
+            </div>
+            
+            <div class="envelope-container" id="envelopeContainer">
+                <div class="envelope" id="envelope">
+                    <div class="envelope-front">
+                        ❤️ Para ti ❤️
+                    </div>
+                    <div class="envelope-back">
+                        <div class="letter">
+                            <h3>Bebe...</h3>
+                            <p>TE QUIERO CULEAR.</p>
+                            <div class="video-container">
+                                <video id="firstVideo" width="100%" autoplay muted>
+                                    <source src="video1.mp4" type="video/mp4">
+                                    Tu navegador no soporta el elemento de video.
+                                </video>
+                                <video id="secondVideo" width="100%" muted>
+                                    <source src="video2.mp4" type="video/mp4">
+                                    Tu navegador no soporta el elemento de video.
+                                </video>
+                            </div>
+                            <div id="nextMessage" class="next-message">
+                                <p>Te lavas la pija y...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const phrases = [
+            "Te amo ruquito...",
+            "Que te vaya bien en todo...",
+            "En el cielo, las estrellas, en la playa, las gaviotas, en medio de mis piernas rebotando tus pelotas....",
+            "¡Ay, bebé!!!, cada vez que te veo, babeo por donde meo!",
+            "JAJAJAJA..."
+        ];
+
+        let currentPhraseIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        let phrasesCompleted = 0;
+        
+        // Configuración de tiempo para el mensaje "Te lavas la pija y..."
+        const messageDuration = 4000; // Cambiado de 3000 a 6000 milisegundos (6 segundos)
+
+        function resetAnimation() {
+            // Reset variables
+            currentPhraseIndex = 0;
+            currentCharIndex = 0;
+            isDeleting = false;
+            typingSpeed = 100;
+            phrasesCompleted = 0;
+            
+            // Reset UI elements
+            const phrasesSection = document.querySelector('.phrases-section');
+            const envelopeContainer = document.getElementById('envelopeContainer');
+            const envelope = document.getElementById('envelope');
+            const firstVideo = document.getElementById('firstVideo');
+            const secondVideo = document.getElementById('secondVideo');
+            const nextMessage = document.getElementById('nextMessage');
+            
+            // Hide envelope and show phrases section
+            envelopeContainer.style.display = 'none';
+            phrasesSection.classList.remove('hide');
+            
+            // Reset envelope
+            envelope.classList.remove('open');
+            
+            // Reset videos
+            firstVideo.style.display = 'block';
+            secondVideo.style.display = 'none';
+            firstVideo.currentTime = 0;
+            secondVideo.currentTime = 0;
+            
+            // Hide next message
+            nextMessage.style.display = 'none';
+            
+            // Start typing again
+            typeEffect();
+        }
+
+        function typeEffect() {
+            const currentPhrase = phrases[currentPhraseIndex];
+            const textElement = document.getElementById('text');
+
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+                typingSpeed = 50;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+                typingSpeed = 100;
+            }
+
+            if (!isDeleting && currentCharIndex === currentPhrase.length) {
+                isDeleting = true;
+                typingSpeed = 2000;
+            }
+
+            if (isDeleting && currentCharIndex === 0) {
+                isDeleting = false;
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                phrasesCompleted++;
+
+                if (phrasesCompleted === phrases.length) {
+                    showEnvelope();
+                    return;
+                }
+            }
+
+            setTimeout(typeEffect, typingSpeed);
+        }
+
+        function showEnvelope() {
+            const phrasesSection = document.querySelector('.phrases-section');
+            const envelopeContainer = document.getElementById('envelopeContainer');
+
+            phrasesSection.classList.add('hide');
+            envelopeContainer.style.display = 'block';
+
+            setTimeout(() => {
+                const envelope = document.getElementById('envelope');
+                envelope.classList.add('open');
+            }, 1000);
+        }
+
+        // Configure video sequence and restart
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstVideo = document.getElementById('firstVideo');
+            const secondVideo = document.getElementById('secondVideo');
+            const nextMessage = document.getElementById('nextMessage');
+
+            // When first video ends, show the message
+            firstVideo.addEventListener('ended', function() {
+                firstVideo.style.display = 'none';
+                nextMessage.style.display = 'block';
+                
+                // After the defined duration, hide message and show second video
+                setTimeout(() => {
+                    nextMessage.style.display = 'none';
+                    // Wait a moment for message to completely disappear
+                    setTimeout(() => {
+                        secondVideo.style.display = 'block';
+                        secondVideo.play(); // Play second video
+                    }, 500);
+                }, messageDuration);
+            });
+            
+            // When second video ends, restart everything
+            secondVideo.addEventListener('ended', function() {
+                setTimeout(() => {
+                    resetAnimation();
+                }, 3000); // Wait 3 seconds before restarting
+            });
+        });
+
+        window.onload = typeEffect;
+    </script>
+</body>
+</html>
