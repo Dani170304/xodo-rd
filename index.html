@@ -60,6 +60,19 @@
             line-height: 1.6;
         }
 
+        /* Nuevo estilo para el cursor */
+        .typewriter::after {
+            content: '|';
+            animation: blink 1s infinite;
+            font-weight: 100;
+            color: #333;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
         .heart {
             color: #ff4646;
             font-size: 3rem;
@@ -189,6 +202,7 @@
                         <div class="letter">
                             <h3>Bebe...</h3>
                             <p>TE QUIERO CULEAR.</p>
+                            <p>Pero Primero...</p>
                             <div class="media-container">
                                 <img id="video2" src="video2.gif" alt="Gif" onload="this.style.display='block'">
                             </div>
@@ -218,10 +232,9 @@
             const video2 = document.getElementById('video2');
             video2.style.display = 'block';
             
-            // Después de 6 segundos (duración aproximada del GIF), reiniciar todo
             setTimeout(() => {
                 resetAnimation();
-            }, 6000); // Ajusta este tiempo según la duración de tu GIF
+            }, 6000);
         }
 
         function showEnvelope() {
@@ -235,7 +248,6 @@
                 const envelope = document.getElementById('envelope');
                 envelope.classList.add('open');
                 
-                // Iniciar secuencia de medios cuando se abre el sobre
                 setTimeout(startMediaSequence, 1000);
             }, 1000);
         }
